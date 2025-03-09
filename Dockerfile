@@ -1,21 +1,5 @@
 FROM python:3.12
 
-# 配置DNS
-RUN echo "nameserver 223.5.5.5" > /etc/resolv.conf && \
-    echo "nameserver 223.6.6.6" >> /etc/resolv.conf
-
-# 设置APT
-RUN mkdir -p /etc/apt/sources.list.d && \
-    rm -f /etc/apt/sources.list.d/* || true && \
-    rm -f /var/lib/apt/lists/lock || true && \
-    rm -f /var/cache/apt/archives/lock || true && \
-    rm -f /var/lib/dpkg/lock* || true
-
-# 配置APT源
-RUN echo "deb http://mirrors.aliyun.com/debian/ bookworm main non-free non-free-firmware contrib" > /etc/apt/sources.list && \
-    echo "deb http://mirrors.aliyun.com/debian/ bookworm-updates main non-free non-free-firmware contrib" >> /etc/apt/sources.list && \
-    echo "deb http://mirrors.aliyun.com/debian-security bookworm-security main non-free non-free-firmware contrib" >> /etc/apt/sources.list
-
 # 更新APT并安装基础包
 RUN apt-get clean && \
     apt-get update -y && \
